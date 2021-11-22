@@ -1,7 +1,6 @@
 import os
 import shutil
 import tempfile
-import time
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -10,7 +9,7 @@ from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django.core.cache import cache
 
-from ..forms import PostForm, CommentForm
+from ..forms import PostForm
 from ..models import Group, Post, Comment, Follow
 
 User = get_user_model()
