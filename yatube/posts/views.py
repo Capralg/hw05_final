@@ -161,7 +161,6 @@ def profile_follow(request, username):
     is_follow = Follow.objects.filter(author=author).exists()
     if request.user != author and not is_follow:
         Follow.objects.get_or_create(user=request.user, author=author)
-    # author = get_object_or_404(User, username=username)
     return redirect('posts:profile', username=username)
 
 
