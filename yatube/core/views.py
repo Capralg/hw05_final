@@ -11,3 +11,7 @@ def server_error(request, exception):
 
 def csrf_failure(request, reason=''):
     return render(request, 'core/403csrf.html')
+
+
+def permission_denied(request, exception):
+    return render(request, 'core/403.html', status=403)
