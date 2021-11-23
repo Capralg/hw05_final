@@ -18,7 +18,6 @@ def index(request):
     index = True
     follow = False
     post_list = Post.objects.all()
-    post_list = Post.objects.select_related('posts')
     paginator = Paginator(post_list, settings.NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
