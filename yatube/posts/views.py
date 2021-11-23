@@ -15,12 +15,17 @@ User = get_user_model()
 @cache_page(20)
 def index(request):
     template = 'posts/index.html'
+    index = True
+    follow = False
     post_list = Post.objects.all()
+    post_list = Post.objects.select_related('posts')
     paginator = Paginator(post_list, settings.NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj,
+        'follow': follow,
+        'index': index,
     }
     return render(request, template, context)
 
@@ -37,21 +42,6 @@ def group_posts(request, slug):
         'page_obj': page_obj,
         'title': title,
         'group': group,
-    }
-    return render(request, template, context)
-
-
-def profile(request, username):
-    template = 'posts/profile.html'
-    user = get_object_or_404(User, username=username)
-    posts = user.posts.all()
-    paginator = Paginator(posts, settings.NUMBER_OF_POSTS)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    context = {
-        'username': user,
-        'posts_count': user.posts.count(),
-        'page_obj': page_obj,
     }
     return render(request, template, context)
 
@@ -145,12 +135,16 @@ def add_comment(request, post_id):
 @login_required
 def follow_index(request):
     template = 'posts/follow.html'
+    follow = True
+    index = False
     posts = Post.objects.filter(author__following__user=request.user)
     paginator = Paginator(posts, settings.NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj,
+        'follow': follow,
+        'index': index,
     }
     return render(request, template, context)
 

@@ -159,7 +159,7 @@ class PostCreateFormTests(TestCase):
             data=form_data,
             follow=True
         )
-        self.assertRedirects(response, '/auth/login/?next=/posts/1/comment')
+        self.assertRedirects(response, '/auth/login/?next=/posts/1/comment/')
         self.assertEqual(Comment.objects.count(), comment_count)
 
     def test_insert_new_comment(self):
